@@ -1,9 +1,6 @@
+import { layers } from "../lib/map_layers";
 const MapSelector = ({ onChange, selectedLayer }) => {
-  const mapLayers = [
-    { name: "OpenStreetMap", value: "openstreetmap" },
-    { name: "Mapbox Streets", value: "mapbox.streets" },
-    // Add more map layers as needed
-  ];
+  const layerKeys = Object.keys(layers);
 
   return (
     <div className="absolute right-0 z-50 flex flex-col m-4 text-center border border-black rounded-lg bg-white/70">
@@ -13,11 +10,14 @@ const MapSelector = ({ onChange, selectedLayer }) => {
         value={selectedLayer}
         onChange={(e) => onChange(e.target.value)}
       >
-        {mapLayers.map((layer) => (
-          <option key={layer.name} value={layer.value}>
-            {layer.name}
-          </option>
-        ))}
+        {layerKeys.map((layerKey) => {
+          const layer = layers[layerKey];
+          return (
+            <option key={layer.name} value={layer.value}>
+              {layer.name}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

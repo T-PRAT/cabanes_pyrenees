@@ -27,7 +27,6 @@ export default function Markers() {
     if (error) console.log("error", error);
     if (data) {
       setHuts(data);
-      console.log(data);
     }
   }
   return (
