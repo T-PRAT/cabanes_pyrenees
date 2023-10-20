@@ -1,8 +1,9 @@
 import { Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { supabase } from "../lib/supabaseClient";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { cabIcon } from "../lib/icons";
+import CurrentHutContext from "../context/currentHut";
 
 interface Hut {
   id: number;
@@ -17,6 +18,8 @@ interface Hut {
 }
 
 export default function Markers() {
+  const currentHut = useContext(CurrentHutContext);
+
   const [huts, setHuts] = useState<Hut[]>([]);
   useEffect(() => {
     getHuts();
@@ -29,6 +32,10 @@ export default function Markers() {
       setHuts(data);
     }
   }
+  function changeHutContext(id: number) {
+    currentHut.setCurrentHut(id);
+  }
+
   return (
     <MarkerClusterGroup chunkedLoading>
       {huts.map((hut) => (
@@ -36,6 +43,7 @@ export default function Markers() {
           key={hut.id}
           position={[hut.latitude, hut.longitude]}
           icon={cabIcon}
+          eventHandlers={{ click: () => changeHutContext(hut.id) }}
         >
           <Popup>
             <h3>{hut.name}</h3>

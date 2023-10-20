@@ -11,7 +11,6 @@ export default function Map() {
   const handleMapLayerChange = (newLayer) => {
     setSelectedLayer(newLayer);
   };
-  console.log(selectedLayer);
   return (
     <>
       <MapSelector

@@ -25,4 +25,12 @@ export const layers = {
     attribution:
       '&copy; <a href="https://www.mapbox.com/about/maps/" target="_blank">Mapbox</a>',
   },
+  IGNClassique: {
+    name: "IGNClassique",
+    url: `https://wxs.ign.fr/${
+      import.meta.env.APP_IGN_KEY
+    }/geoportail/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&TILEMATRIXSET=PM&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&FORMAT=image/jpeg&STYLE=normal`,
+    attribution:
+      "&copy; <a href='https://www.geoportail.gouv.fr/' target='_blank'>IGN</a>",
+  },
 };
