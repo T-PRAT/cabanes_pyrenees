@@ -1,15 +1,15 @@
 import SideBar from "./layout/SideBar";
 import Map from "./layout/Map";
-import CurrentHutContext from "./context/currentHut";
+import { CurrentHutContextProvider } from "./context/currentHutContext";
 
 function App() {
   return (
-    <div className="flex ">
-      <CurrentHutContext.Provider value={0}>
+    <CurrentHutContextProvider>
+      <div className="flex">
         <SideBar />
         <Map />
-      </CurrentHutContext.Provider>
-    </div>
+      </div>
+    </CurrentHutContextProvider>
   );
 }
 

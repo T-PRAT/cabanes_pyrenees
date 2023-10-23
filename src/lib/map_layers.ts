@@ -1,15 +1,15 @@
 export const layers = {
-  OpenStreetMap: {
-    name: "OpenStreetMap",
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-  },
   OpenTopoMap: {
     name: "OpenTopoMap",
     url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
     attribution:
       '&copy; <a href="https://www.opentopomap.org" target="_blank">OpenTopoMap</a>',
+  },
+  OpenStreetMap: {
+    name: "OpenStreetMap",
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
   },
   OpenHikingMap: {
     name: "OpenHikingMap",

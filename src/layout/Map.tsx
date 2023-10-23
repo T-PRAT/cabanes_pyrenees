@@ -6,7 +6,7 @@ import MapSelector from "../components/MapSelector";
 import { layers } from "../lib/map_layers";
 
 export default function Map() {
-  const [selectedLayer, setSelectedLayer] = useState("OpenStreetMap");
+  const [selectedLayer, setSelectedLayer] = useState("OpenTopoMap");
 
   const handleMapLayerChange = (newLayer) => {
     setSelectedLayer(newLayer);

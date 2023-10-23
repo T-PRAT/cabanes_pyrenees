@@ -3,9 +3,9 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import { supabase } from "../lib/supabaseClient";
 import { useContext, useEffect, useState } from "react";
 import { cabIcon } from "../lib/icons";
-import CurrentHutContext from "../context/currentHut";
+import { CurrentHutContext } from "../context/currentHutContext";
 
-interface Hut {
+export interface Hut {
   id: number;
   name: string;
   latitude: number;
@@ -18,8 +18,7 @@ interface Hut {
 }
 
 export default function Markers() {
-  const currentHut = useContext(CurrentHutContext);
-
+  const { setCurrentHut } = useContext(CurrentHutContext);
   const [huts, setHuts] = useState<Hut[]>([]);
   useEffect(() => {
     getHuts();
@@ -33,7 +32,7 @@ export default function Markers() {
     }
   }
   function changeHutContext(id: number) {
-    currentHut.setCurrentHut(id);
+    setCurrentHut(id);
   }
 
   return (
