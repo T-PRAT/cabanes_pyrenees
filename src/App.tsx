@@ -8,7 +8,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <CurrentHutContextProvider>
-        <div className="flex">
+        <div className="flex text-foreground">
           <SideBar />
           <Map />
         </div>
