@@ -26,14 +26,12 @@ export default function Markers() {
         {huts?.map((hut) => (
           <Marker
             key={hut.id}
-            position={[hut.latitude, hut.longitude]}
+            position={[Number(hut.latitude), Number(hut.longitude)]}
             icon={cabIcon}
             eventHandlers={{ click: () => changeHutContext(hut.id) }}
           >
             <Popup>
               <h3>{hut.name}</h3>
-              <p>{hut.city}</p>
-              <p>{hut.altitude}m</p>
             </Popup>
           </Marker>
         ))}

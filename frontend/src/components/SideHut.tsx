@@ -3,13 +3,7 @@ import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
 import { getHut } from "../hooks/getData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@/components/ui/table";
+//import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
 
 export default function SideHut() {
   const { currentHut } = useContext(CurrentHutContext);
@@ -28,7 +22,7 @@ export default function SideHut() {
           <CardTitle>{hut?.name}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="py-3 text-md">{hut?.description}</p>
+          {/* <p className="py-3 text-md">{hut?.description}</p>
           <Table>
             <TableBody>
               <TableRow>
@@ -56,7 +50,7 @@ export default function SideHut() {
                 <TableCell>{hut?.longitude}</TableCell>
               </TableRow>
             </tbody>
-          </table>
+          </table> */}
         </CardContent>
       </Card>
     );

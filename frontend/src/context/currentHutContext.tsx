@@ -17,9 +17,5 @@ export const CurrentHutContext = createContext<CurrentHutContextType>({
 export const CurrentHutContextProvider: FC<Props> = ({ children }) => {
   const [currentHut, setCurrentHut] = useState<number | null>(null);
 
-  return (
-    <CurrentHutContext.Provider value={{ currentHut, setCurrentHut }}>
-      {children}
-    </CurrentHutContext.Provider>
-  );
+  return <CurrentHutContext.Provider value={{ currentHut, setCurrentHut }}>{children}</CurrentHutContext.Provider>;
 };

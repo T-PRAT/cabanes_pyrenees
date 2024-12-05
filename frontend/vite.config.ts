@@ -8,7 +8,15 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@server": path.resolve(__dirname, "../server"),
     },
   },
-  envPrefix: "APP_",
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
+  },
 });
