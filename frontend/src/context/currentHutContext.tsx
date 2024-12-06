@@ -1,21 +1,21 @@
 import { createContext, useState, FC, Dispatch, SetStateAction } from "react";
 
-type CurrentHutContextType = {
-  currentHut: number | null;
-  setCurrentHut: Dispatch<SetStateAction<number | null>>;
+type CurrentHutsContextType = {
+  currentHuts: number | null;
+  setCurrentHuts: Dispatch<SetStateAction<number | null>>;
 };
 
 type Props = {
   children: React.ReactNode;
 };
 
-export const CurrentHutContext = createContext<CurrentHutContextType>({
-  currentHut: null,
-  setCurrentHut: () => {},
+export const CurrentHutsContext = createContext<CurrentHutsContextType>({
+  currentHuts: null,
+  setCurrentHuts: () => {},
 });
 
-export const CurrentHutContextProvider: FC<Props> = ({ children }) => {
-  const [currentHut, setCurrentHut] = useState<number | null>(null);
+export const CurrentHutsContextProvider: FC<Props> = ({ children }) => {
+  const [currentHuts, setCurrentHuts] = useState<number | null>(null);
 
-  return <CurrentHutContext.Provider value={{ currentHut, setCurrentHut }}>{children}</CurrentHutContext.Provider>;
+  return <CurrentHutsContext.Provider value={{ currentHuts, setCurrentHuts }}>{children}</CurrentHutsContext.Provider>;
 };

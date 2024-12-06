@@ -1,16 +1,16 @@
 import { useContext } from "react";
-import { CurrentHutContext } from "../context/currentHutContext";
+import { CurrentHutsContext } from "../context/currentHutsContext";
 import { useQuery } from "@tanstack/react-query";
-import { getHut } from "../hooks/getData";
+import { getHuts } from "../hooks/getData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 //import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
 
-export default function SideHut() {
-  const { currentHut } = useContext(CurrentHutContext);
+export default function SideHuts() {
+  const { currentHuts } = useContext(CurrentHutsContext);
 
-  const { data: hut, status } = useQuery({
-    queryKey: ["hut", currentHut],
-    queryFn: () => getHut(currentHut),
+  const { data: huts, status } = useQuery({
+    queryKey: ["huts", currentHuts],
+    queryFn: () => getHuts(currentHuts),
   });
 
   if (status === "pending") return <p>Loading...</p>;
@@ -19,19 +19,19 @@ export default function SideHut() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>{hut?.name}</CardTitle>
+          <CardTitle>{huts?.name}</CardTitle>
         </CardHeader>
         <CardContent>
-          {/* <p className="py-3 text-md">{hut?.description}</p>
+          {/* <p className="py-3 text-md">{huts?.description}</p>
           <Table>
             <TableBody>
               <TableRow>
                 <TableHead>Capacité été:</TableHead>
-                <TableCell>{hut?.summer_capacity}</TableCell>
+                <TableCell>{huts?.summer_capacity}</TableCell>
               </TableRow>
               <TableRow>
                 <TableHead>Capacité hiver:</TableHead>
-                <TableCell>{hut?.winter_capacity}</TableCell>
+                <TableCell>{huts?.winter_capacity}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -45,9 +45,9 @@ export default function SideHut() {
             </thead>
             <tbody>
               <TableRow>
-                <TableCell>{hut?.altitude}</TableCell>
-                <TableCell>{hut?.latitude}</TableCell>
-                <TableCell>{hut?.longitude}</TableCell>
+                <TableCell>{huts?.altitude}</TableCell>
+                <TableCell>{huts?.latitude}</TableCell>
+                <TableCell>{huts?.longitude}</TableCell>
               </TableRow>
             </tbody>
           </table> */}

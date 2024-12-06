@@ -2,20 +2,20 @@ import { Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { useContext } from "react";
 import { cabIcon } from "../lib/icons";
-import { CurrentHutContext } from "../context/currentHutContext";
+import { CurrentHutsContext } from "../context/currentHutsContext";
 import { useQuery } from "@tanstack/react-query";
-import { getHuts } from "../hooks/getData";
+import { getHutss } from "../hooks/getData";
 
 export default function Markers() {
-  const { setCurrentHut } = useContext(CurrentHutContext);
+  const { setCurrentHuts } = useContext(CurrentHutsContext);
 
-  const { data: huts, status } = useQuery({
-    queryKey: ["huts"],
-    queryFn: () => getHuts(),
+  const { data: hutss, status } = useQuery({
+    queryKey: ["hutss"],
+    queryFn: () => getHutss(),
   });
 
-  function changeHutContext(id: number) {
-    setCurrentHut(id);
+  function changeHutsContext(id: number) {
+    setCurrentHuts(id);
   }
 
   if (status === "pending") return <p>Loading...</p>;
@@ -23,15 +23,15 @@ export default function Markers() {
   else
     return (
       <MarkerClusterGroup chunkedLoading>
-        {huts?.map((hut) => (
+        {hutss?.map((huts) => (
           <Marker
-            key={hut.id}
-            position={[Number(hut.latitude), Number(hut.longitude)]}
+            key={huts.id}
+            position={[Number(huts.latitude), Number(huts.longitude)]}
             icon={cabIcon}
-            eventHandlers={{ click: () => changeHutContext(hut.id) }}
+            eventHandlers={{ click: () => changeHutsContext(huts.id) }}
           >
             <Popup>
-              <h3>{hut.name}</h3>
+              <h3>{huts.name}</h3>
             </Popup>
           </Marker>
         ))}
