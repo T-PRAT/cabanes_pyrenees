@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import SideHuts from "../components/SideHuts";
+import SideHuts from "../components/SideHut";
 
 export default function SideBar() {
   return (

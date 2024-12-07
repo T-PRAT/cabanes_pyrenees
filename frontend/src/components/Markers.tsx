@@ -2,12 +2,12 @@ import { Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { useContext } from "react";
 import { cabIcon } from "../lib/icons";
-import { CurrentHutsContext } from "../context/currentHutsContext";
+import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
 import { getHutss } from "../hooks/getData";
 
 export default function Markers() {
-  const { setCurrentHuts } = useContext(CurrentHutsContext);
+  const { setCurrentHut } = useContext(CurrentHutContext);
 
   const { data: hutss, status } = useQuery({
     queryKey: ["hutss"],
@@ -15,7 +15,7 @@ export default function Markers() {
   });
 
   function changeHutsContext(id: number) {
-    setCurrentHuts(id);
+    setCurrentHut(id);
   }
 
   if (status === "pending") return <p>Loading...</p>;

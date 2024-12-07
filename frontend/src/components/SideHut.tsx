@@ -1,16 +1,16 @@
 import { useContext } from "react";
-import { CurrentHutsContext } from "../context/currentHutsContext";
+import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
 import { getHuts } from "../hooks/getData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 //import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
 
 export default function SideHuts() {
-  const { currentHuts } = useContext(CurrentHutsContext);
+  const { currentHut } = useContext(CurrentHutContext);
 
   const { data: huts, status } = useQuery({
-    queryKey: ["huts", currentHuts],
-    queryFn: () => getHuts(currentHuts),
+    queryKey: ["hut", currentHut],
+    queryFn: () => getHuts(currentHut),
   });
 
   if (status === "pending") return <p>Loading...</p>;
