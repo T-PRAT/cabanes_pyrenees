@@ -1,12 +1,19 @@
 import type { InferSelectModel } from "drizzle-orm";
-import { boolean, pgTable, integer, decimal, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, integer, decimal, timestamp, varchar, text } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar("name", { length: 255 }).notNull(),
-  otpSecret: varchar("otp_secret", { length: 255 }).notNull(),
-  isActivated: boolean().default(false),
+  id: integer().primaryKey(),
+  username: varchar("username", { length: 255 }).notNull(),
+  passwordHash: text("password_hash").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const sessions = pgTable("sessions", {
+  id: text("id").primaryKey(),
+  userId: integer()
+    .notNull()
+    .references(() => users.id),
+  expiresAt: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
 });
 
 export const huts = pgTable("huts", {
@@ -22,4 +29,5 @@ export const huts = pgTable("huts", {
 });
 
 export type Users = InferSelectModel<typeof users>;
+export type Sessions = InferSelectModel<typeof sessions>;
 export type Huts = InferSelectModel<typeof huts>;

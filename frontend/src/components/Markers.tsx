@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { cabIcon } from "../lib/icons";
 import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
-import { getHutss } from "../hooks/getData";
+import { getHutss } from "../hooks/request";
 
 export const Markers = () => {
   const { setCurrentHut } = useContext(CurrentHutContext);

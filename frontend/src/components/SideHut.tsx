@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
-import { getHuts } from "../hooks/getData";
+import { getHuts } from "../hooks/request";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 //import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
 

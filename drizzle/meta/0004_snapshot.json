@@ -1,6 +1,6 @@
 {
-  "id": "20c7ccd8-9e36-4dbd-843e-acfe6d3b59b7",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "4dbef909-bf21-458c-a5ea-48f77dd7829d",
+  "prevId": "15933aa1-84fd-4720-ba01-4d559c359f5c",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -82,12 +82,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "token": {
-          "name": "token",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
         "expires_at": {
           "name": "expires_at",
           "type": "timestamp with time zone",
@@ -125,37 +119,19 @@
           "name": "id",
           "type": "integer",
           "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "users_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "notNull": true
         },
-        "name": {
-          "name": "name",
+        "username": {
+          "name": "username",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "otp_secret": {
-          "name": "otp_secret",
-          "type": "varchar(255)",
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "isActivated": {
-          "name": "isActivated",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
         },
         "created_at": {
           "name": "created_at",

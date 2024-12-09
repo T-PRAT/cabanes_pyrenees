@@ -1,6 +1,6 @@
 {
-  "id": "20c7ccd8-9e36-4dbd-843e-acfe6d3b59b7",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "f8f8f8e0-6c1b-4a18-9d16-ff91021c768c",
+  "prevId": "20c7ccd8-9e36-4dbd-843e-acfe6d3b59b7",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -79,12 +79,6 @@
         "userId": {
           "name": "userId",
           "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "token": {
-          "name": "token",
-          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
