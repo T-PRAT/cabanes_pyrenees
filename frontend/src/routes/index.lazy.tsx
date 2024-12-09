@@ -1,6 +1,7 @@
-import SideBar from "@/components/SideBar";
-import Map from "@/components/Map";
+import { SideHut } from "@/components/SideHut";
+import { Map } from "@/components/Map";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { SearchBar } from "@/components/SearchBar";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -8,8 +9,9 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   return (
-    <div className="flex text-foreground">
-      <SideBar />
+    <div className="">
+      <SearchBar />
+      <SideHut />
       <Map />
     </div>
   );

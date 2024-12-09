@@ -6,7 +6,7 @@ import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
 import { getHutss } from "../hooks/getData";
 
-export default function Markers() {
+export const Markers = () => {
   const { setCurrentHut } = useContext(CurrentHutContext);
 
   const { data: hutss, status } = useQuery({
@@ -37,4 +37,4 @@ export default function Markers() {
         ))}
       </MarkerClusterGroup>
     );
-}
+};

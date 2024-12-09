@@ -1,15 +1,12 @@
 import { layers } from "../lib/map_layers";
-const MapSelector = ({ onChange, selectedLayer }) => {
+
+export const MapSelector = ({ onChange, selectedLayer }) => {
   const layerKeys = Object.keys(layers);
 
   return (
     <div className="absolute right-0 z-50 flex flex-col m-4 text-center border rounded  backdrop-blur-sm">
       <label className="p-1 font-bold">Fonds de Carte</label>
-      <select
-        className="p-1"
-        value={selectedLayer}
-        onChange={(e) => onChange(e.target.value)}
-      >
+      <select className="p-1" value={selectedLayer} onChange={(e) => onChange(e.target.value)}>
         {layerKeys.map((layerKey) => {
           const layer = layers[layerKey];
           return (
@@ -22,5 +19,3 @@ const MapSelector = ({ onChange, selectedLayer }) => {
     </div>
   );
 };
-
-export default MapSelector;
