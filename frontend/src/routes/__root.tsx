@@ -7,7 +7,6 @@ export const Route = createRootRoute({
     <>
       <NavBar />
 
-      <hr />
       <Outlet />
       <Toaster richColors />
     </>

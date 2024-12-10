@@ -1,9 +1,14 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { HutList } from "@/components/HutList";
 
 export const Route = createLazyFileRoute("/list")({
   component: List,
 });
 
 function List() {
-  return <div className="p-2">Hello from List!</div>;
+  return (
+    <div className="mt-24 container">
+      <HutList />
+    </div>
+  );
 }

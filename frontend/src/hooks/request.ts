@@ -4,15 +4,16 @@ import { type ApiType } from "@server/app";
 const client = hc<ApiType>("/");
 const api = client.api;
 
-export async function getHutss() {
+export async function getHuts() {
   const response = await api.huts.$get();
   const data = await response.json();
+  console.log(data);
   if (!data) return [];
 
   return data;
 }
 
-export async function getHuts(id: number) {
+export async function getHut(id: number) {
   const response = await api.huts[":id"].$get({ param: { id: id.toString() } });
   const data = await response.json();
 

@@ -20,6 +20,10 @@ export const sessions = pgTable("sessions", {
 export const huts = pgTable("huts", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
+  description: text(),
+  summerCapacity: integer("summer_capacity"),
+  winterCapacity: integer("winter_capacity"),
+  altitude: integer().notNull(),
   latitude: decimal().notNull(),
   longitude: decimal().notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),

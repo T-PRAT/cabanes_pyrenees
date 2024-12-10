@@ -4,14 +4,14 @@ import { useContext } from "react";
 import { cabIcon } from "../lib/icons";
 import { CurrentHutContext } from "../context/currentHutContext";
 import { useQuery } from "@tanstack/react-query";
-import { getHutss } from "../hooks/request";
+import { getHuts } from "../hooks/request";
 
 export const Markers = () => {
   const { setCurrentHut } = useContext(CurrentHutContext);
 
-  const { data: hutss, status } = useQuery({
-    queryKey: ["hutss"],
-    queryFn: () => getHutss(),
+  const { data: huts, status } = useQuery({
+    queryKey: ["huts"],
+    queryFn: () => getHuts(),
   });
 
   function changeHutsContext(id: number) {
@@ -23,7 +23,7 @@ export const Markers = () => {
   else
     return (
       <MarkerClusterGroup chunkedLoading>
-        {hutss?.map((huts) => (
+        {huts?.map((huts) => (
           <Marker
             key={huts.id}
             position={[Number(huts.latitude), Number(huts.longitude)]}
