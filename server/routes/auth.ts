@@ -1,5 +1,5 @@
-import { generateSessionToken, createSession, generateUserId } from "../lib/auth";
-import { loginSchema } from "../../shared/validationSchema";
+import { generateSessionToken, createSession, generateUserId, validateSessionToken } from "../lib/auth";
+import { loginSchema, signupSchema } from "../../shared/validationSchema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { db } from "../db";
@@ -9,13 +9,13 @@ import { eq } from "drizzle-orm";
 import { getUser } from "../middleware/getUser";
 
 const authRoute = new Hono()
-  .post("/signup", zValidator("form", loginSchema), async (c) => {
-    const { username, password } = c.req.valid("form");
+  .post("/signup", zValidator("form", signupSchema), async (c) => {
+    const { username, email, password } = c.req.valid("form");
     const passwordHash = await Bun.password.hash(password);
     const userId = generateUserId();
 
     try {
-      await db.insert(users).values({ id: userId, username, passwordHash });
+      await db.insert(users).values({ id: userId, username, email, passwordHash });
       const token = generateSessionToken();
       const session = await createSession(token, userId);
       setCookie(c, "session", session.id, { maxAge: 60 * 60 * 24 * 30, httpOnly: true, sameSite: "strict", path: "/" });
@@ -56,9 +56,11 @@ const authRoute = new Hono()
     return c.json({ success: true });
   })
   .get("/me", getUser, async (c) => {
-    const user = c.get("user")!;
-
-    return c.json({ user });
+    const user = c.get("user");
+    if (!user) {
+      return c.json({ error: "No user found" });
+    }
+    return c.json({ username: user.username });
   });
 
 export default authRoute;

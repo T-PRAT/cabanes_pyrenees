@@ -26,8 +26,8 @@ export async function login(username: string, password: string) {
   return data;
 }
 
-export async function signup(username: string, password: string) {
-  const response = await api.auth.signup.$post({ form: { username, password } });
+export async function signup(username: string, email: string, password: string) {
+  const response = await api.auth.signup.$post({ form: { username, email, password } });
   const data = await response.json();
 
   return data;
@@ -36,14 +36,14 @@ export async function signup(username: string, password: string) {
 export async function logout() {
   const response = await api.auth.logout.$post();
   const data = await response.json();
-
+  console.log(data);
   return data;
 }
 
 export async function getUser() {
   const response = await api.auth.me.$get();
-  console.log(response);
   const data = await response.json();
+  console.log(data);
 
-  return data;
+  return data as { username: string };
 }
