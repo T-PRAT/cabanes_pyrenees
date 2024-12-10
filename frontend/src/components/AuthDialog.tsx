@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginSchema, signupSchema } from "../../../shared/validationSchema";
+import { toast } from "sonner";
 
 export const AuthDialog = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -36,18 +37,18 @@ export const AuthDialog = () => {
       if (res && res.success) {
         setUsername(values.username);
         setIsLoginOpen(false);
+        toast.success("Vous êtes connecté");
       } else {
-        loginForm.setError("username", { type: "manual", message: res.error });
-        loginForm.setError("password", { type: "manual", message: res.error });
+        loginForm.setError("username", { type: "manual", message: "Identifiant ou mot de passe inconnu" });
+        loginForm.setError("password", { type: "manual", message: "Identifiant ou mot de passe inconnu" });
       }
     } catch (error) {
-      loginForm.setError("username", { type: "manual", message: "An unexpected error occurred" });
-      loginForm.setError("password", { type: "manual", message: "An unexpected error occurred" });
+      loginForm.setError("username", { type: "manual", message: "Une erreur est survenu" });
     }
   };
 
   const signupForm = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -61,6 +62,7 @@ export const AuthDialog = () => {
       if (res && res.success) {
         setUsername(values.username);
         setIsSignupOpen(false);
+        toast.success("Votre compte a bien été créé");
       }
     } catch (error) {
       signupForm.setError("username", { type: "manual", message: "An unexpected error occurred" });
@@ -71,6 +73,7 @@ export const AuthDialog = () => {
   const logOut = async () => {
     await logout();
     setUsername(null);
+    toast.success("Vous êtes déconnecté");
   };
   return (
     <>
