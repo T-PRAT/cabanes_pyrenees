@@ -6,12 +6,15 @@
     "start": "bun server/index.ts",
     "dev": "bun --watch server/index.ts",
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate"
+    "migrate": "drizzle-kit migrate",
+    "prettier": "prettier --write ."
   },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.29.1",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "tsx": "^4.19.2"
   },
   "peerDependencies": {

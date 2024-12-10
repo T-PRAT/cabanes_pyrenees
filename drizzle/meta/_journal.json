@@ -1,55 +1,55 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1733762510165,
-      "tag": "0000_cool_ezekiel",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1733762681759,
-      "tag": "0001_spooky_jackpot",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1733765124542,
-      "tag": "0002_certain_mac_gargan",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1733765595147,
-      "tag": "0003_sweet_mother_askani",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1733765696863,
-      "tag": "0004_tense_proemial_gods",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1733839715186,
-      "tag": "0005_lively_captain_america",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1733868290431,
-      "tag": "0006_crazy_rick_jones",
-      "breakpoints": true
-    }
-  ]
+   "version": "7",
+   "dialect": "postgresql",
+   "entries": [
+      {
+         "idx": 0,
+         "version": "7",
+         "when": 1733762510165,
+         "tag": "0000_cool_ezekiel",
+         "breakpoints": true
+      },
+      {
+         "idx": 1,
+         "version": "7",
+         "when": 1733762681759,
+         "tag": "0001_spooky_jackpot",
+         "breakpoints": true
+      },
+      {
+         "idx": 2,
+         "version": "7",
+         "when": 1733765124542,
+         "tag": "0002_certain_mac_gargan",
+         "breakpoints": true
+      },
+      {
+         "idx": 3,
+         "version": "7",
+         "when": 1733765595147,
+         "tag": "0003_sweet_mother_askani",
+         "breakpoints": true
+      },
+      {
+         "idx": 4,
+         "version": "7",
+         "when": 1733765696863,
+         "tag": "0004_tense_proemial_gods",
+         "breakpoints": true
+      },
+      {
+         "idx": 5,
+         "version": "7",
+         "when": 1733839715186,
+         "tag": "0005_lively_captain_america",
+         "breakpoints": true
+      },
+      {
+         "idx": 6,
+         "version": "7",
+         "when": 1733868290431,
+         "tag": "0006_crazy_rick_jones",
+         "breakpoints": true
+      }
+   ]
 }

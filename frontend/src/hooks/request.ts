@@ -1,50 +1,50 @@
-import { hc } from "hono/client";
-import { type ApiType } from "@server/app";
+import { hc } from 'hono/client'
+import { type ApiType } from '@server/app'
 
-const client = hc<ApiType>("/");
-const api = client.api;
+const client = hc<ApiType>('/')
+const api = client.api
 
 export async function getHuts() {
-  const response = await api.huts.$get();
-  const data = await response.json();
-  console.log(data);
-  if (!data) return [];
+   const response = await api.huts.$get()
+   const data = await response.json()
+   console.log(data)
+   if (!data) return []
 
-  return data;
+   return data
 }
 
 export async function getHut(id: number) {
-  const response = await api.huts[":id"].$get({ param: { id: id.toString() } });
-  const data = await response.json();
+   const response = await api.huts[':id'].$get({ param: { id: id.toString() } })
+   const data = await response.json()
 
-  return data;
+   return data
 }
 
 export async function login(username: string, password: string) {
-  const response = await api.auth.login.$post({ form: { username, password } });
-  const data = await response.json();
+   const response = await api.auth.login.$post({ form: { username, password } })
+   const data = await response.json()
 
-  return data;
+   return data
 }
 
 export async function signup(username: string, email: string, password: string) {
-  const response = await api.auth.signup.$post({ form: { username, email, password } });
-  const data = await response.json();
+   const response = await api.auth.signup.$post({ form: { username, email, password } })
+   const data = await response.json()
 
-  return data;
+   return data
 }
 
 export async function logout() {
-  const response = await api.auth.logout.$post();
-  const data = await response.json();
-  console.log(data);
-  return data;
+   const response = await api.auth.logout.$post()
+   const data = await response.json()
+   console.log(data)
+   return data
 }
 
 export async function getUser() {
-  const response = await api.auth.me.$get();
-  const data = await response.json();
-  console.log(data);
+   const response = await api.auth.me.$get()
+   const data = await response.json()
+   console.log(data)
 
-  return data as { username: string };
+   return data as { username: string }
 }
