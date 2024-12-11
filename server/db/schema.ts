@@ -31,6 +31,21 @@ export const huts = pgTable('huts', {
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
+   userId: integer()
+      .references(() => users.id)
+      .default(1),
+})
+
+export const comments = pgTable('comments', {
+   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+   content: text().notNull(),
+   createdAt: timestamp('created_at').notNull().defaultNow(),
+   userId: integer()
+      .notNull()
+      .references(() => users.id),
+   hutId: integer()
+      .notNull()
+      .references(() => huts.id),
 })
 
 export type Users = InferSelectModel<typeof users>
