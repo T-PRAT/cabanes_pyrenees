@@ -12,8 +12,10 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { loginSchema, signupSchema } from '../../../shared/validationSchema'
 import { toast } from 'sonner'
+import { useNavigate } from '@tanstack/react-router'
 
 export const AuthDialog = () => {
+   const navigate = useNavigate()
    const [isLoginOpen, setIsLoginOpen] = useState(false)
    const [isSignupOpen, setIsSignupOpen] = useState(false)
    const [username, setUsername] = useState<string | null>(null)
@@ -81,16 +83,18 @@ export const AuthDialog = () => {
             <DropdownMenuTrigger asChild>
                <Button variant="ghost" size="icon">
                   {username ? (
-                     <div className="bg-muted text-background flex size-8 items-center justify-center rounded-lg font-mono text-xl font-bold uppercase">{username.charAt(0)}</div>
+                     <div className=" bg-accent-foreground text-accent flex size-8 items-center justify-center rounded-lg font-mono text-xl font-bold uppercase">
+                        {username.charAt(0)}
+                     </div>
                   ) : (
-                     <User className="h-5 w-5" />
+                     <User className=" h-5 w-5" />
                   )}
                </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                {username ? (
                   <>
-                     <DropdownMenuItem>Mon compte</DropdownMenuItem>
+                     <DropdownMenuItem onSelect={() => navigate({ to: '/account' })}>Mon compte</DropdownMenuItem>
                      <DropdownMenuItem onSelect={() => logOut()}>Déconnexion</DropdownMenuItem>
                   </>
                ) : (
@@ -105,7 +109,7 @@ export const AuthDialog = () => {
          <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
             <DialogContent className="sm:max-w-[425px]">
                <DialogHeader>
-                  <DialogTitle>Login</DialogTitle>
+                  <DialogTitle>Se connecter</DialogTitle>
                </DialogHeader>
                <Form {...loginForm}>
                   <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
@@ -135,7 +139,7 @@ export const AuthDialog = () => {
                            </FormItem>
                         )}
                      />
-                     <Button type="submit">Submit</Button>
+                     <Button type="submit">Connexion</Button>
                   </form>
                </Form>
             </DialogContent>

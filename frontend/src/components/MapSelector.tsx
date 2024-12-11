@@ -1,21 +1,31 @@
 import { layers } from '../lib/map_layers'
+import { Button } from '@/components/ui/button'
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
+import { Check, Layers } from 'lucide-react'
 
-export const MapSelector = ({ onChange, selectedLayer }) => {
+export const MapSelector = ({ onChange, selectedLayer = 'OpenTopoMap' }) => {
    const layerKeys = Object.keys(layers)
 
    return (
-      <div className="absolute right-0 z-50 m-4 flex flex-col rounded border text-center backdrop-blur-sm">
-         <label className="p-1 font-bold">Fonds de Carte</label>
-         <select className="p-1" value={selectedLayer} onChange={(e) => onChange(e.target.value)}>
-            {layerKeys.map((layerKey) => {
-               const layer = layers[layerKey]
-               return (
-                  <option key={layer.name} value={layer.value}>
-                     {layer.name}
-                  </option>
-               )
-            })}
-         </select>
-      </div>
+      <Popover>
+         <PopoverTrigger asChild>
+            <Button variant="outline" className="fixed right-5 top-9 z-20 p-2">
+               <Layers size={20} strokeWidth={3} />
+            </Button>
+         </PopoverTrigger>
+         <PopoverContent className="w-38 p-0">
+            <div className="grid grid-cols-1">
+               {layerKeys.map((layerKey) => {
+                  const option = layers[layerKey]
+                  return (
+                     <Button key={layerKey} variant="ghost" className={`justify-start font-bold ${selectedLayer === layerKey && 'bg-accent'}`} onClick={() => onChange(layerKey)}>
+                        {option.name}
+                        {selectedLayer === layerKey && <Check className="ml-auto h-4 w-4" />}
+                     </Button>
+                  )
+               })}
+            </div>
+         </PopoverContent>
+      </Popover>
    )
 }
