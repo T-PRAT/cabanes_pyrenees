@@ -32,10 +32,19 @@ const hutsRoute = new Hono()
       return c.json(data[0])
    })
    .post('/', getUser, zValidator('form', hutSchema), async (c) => {
+      const user = c.get('user')
+      if (!user) return c.status(401)
       const hut = c.req.valid('form')
-      hut.userId = c.get('user').id
-      console.log(hut)
-      const data = await db.insert(huts).values(hut)
+      console.log(user, hut)
+      const data = await db.insert(huts).values({ ...hut, userId: user.id })
+
+      return c.json(data)
+   })
+   .delete('/:id', getUser, async (c) => {
+      const user = c.get('user')
+      if (!user) return c.status(401)
+      const id = Number(c.req.param('id'))
+      const data = await db.delete(huts).where(eq(huts.id, id))
 
       return c.json(data)
    })

@@ -31,7 +31,7 @@ export const huts = pgTable('huts', {
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
-   userId: integer()
+   userId: integer('user_id')
       .references(() => users.id)
       .default(1),
 })

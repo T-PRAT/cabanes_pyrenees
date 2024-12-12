@@ -36,6 +36,13 @@ export async function createHut(hut: z.infer<typeof hutSchema>) {
    return data
 }
 
+export async function deleteHut(id: number) {
+   const response = await api.huts[':id'].$delete({ param: { id: id.toString() } })
+   const data = await response.json()
+
+   return data
+}
+
 export async function login(username: string, password: string) {
    const response = await api.auth.login.$post({ form: { username, password } })
    const data = await response.json()

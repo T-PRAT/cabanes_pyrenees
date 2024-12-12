@@ -15,7 +15,7 @@ export const Map = () => {
    return (
       <>
          <MapSelector onChange={handleMapLayerChange} selectedLayer={selectedLayer} />
-         <MapContainer center={[42.631, 0.657]} zoom={8} scrollWheelZoom={true} className="z-0 h-screen grow">
+         <MapContainer center={[42.631, 0.657]} zoomControl={false} zoom={8} scrollWheelZoom={true} className="z-0 h-screen grow">
             <TileLayer url={layers[selectedLayer].url} attribution={layers[selectedLayer].attribution} />
             <Markers />
             <MapControls />

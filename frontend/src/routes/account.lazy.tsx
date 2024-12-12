@@ -16,11 +16,13 @@ function Account() {
 
    return (
       <div className="container mt-24">
-         <CreateHutDialog />
-         <h1 className="mb-6 text-4xl font-bold">Mes cabanes</h1>
+         <div className="flex justify-between">
+            <h1 className="mb-6 text-2xl font-bold md:text-4xl">Mes cabanes</h1>
+            <CreateHutDialog />
+         </div>
          {status === 'pending' && <p>Chargement...</p>}
          {status === 'error' && <p>Une erreur est survenue</p>}
-         {status === 'success' && <HutList huts={myHuts} />}
+         {status === 'success' && <HutList huts={myHuts} edit={true} />}
       </div>
    )
 }

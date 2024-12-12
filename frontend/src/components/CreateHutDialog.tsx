@@ -9,9 +9,12 @@ import { hutSchema } from '../../../shared/validationSchema'
 import { toast } from 'sonner'
 import { Button } from './ui/button'
 import FormFieldItem from './ui/FormFieldItem'
+import { useQueryClient } from '@tanstack/react-query'
+import { Plus } from 'lucide-react'
 
 export const CreateHutDialog = () => {
    const [isOpen, setIsOpen] = useState(false)
+   const queryClient = useQueryClient()
 
    const form = useForm<z.infer<typeof hutSchema>>({
       resolver: zodResolver(hutSchema),
@@ -27,21 +30,22 @@ export const CreateHutDialog = () => {
    })
 
    const onSubmit = async (values: z.infer<typeof hutSchema>) => {
-      console.log('ONSUBMIT')
-      try {
-         const res = await createHut(values)
-         if (res) {
-            setIsOpen(false)
-            toast.success('Le refuge a bien été créé')
-         }
-      } catch (error) {
+      const res = await createHut(values)
+      if (res) {
+         queryClient.invalidateQueries({ queryKey: ['myHuts'] })
+         setIsOpen(false)
+         toast.success('La cabane a bien été créé')
+      } else {
          toast.error('Une erreur est survenue')
       }
    }
 
    return (
       <>
-         <Button onClick={() => setIsOpen(true)}>Ajouter une cabane</Button>
+         <Button onClick={() => setIsOpen(true)}>
+            <Plus size={20} strokeWidth={4} />
+            <span className="ml-2 hidden md:block">Ajouter une cabane</span>
+         </Button>
          <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogContent>
                <DialogHeader>
