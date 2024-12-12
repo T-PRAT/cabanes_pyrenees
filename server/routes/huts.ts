@@ -8,7 +8,19 @@ import { getUser } from '../middleware/getUser'
 
 const hutsRoute = new Hono()
    .get('/', async (c) => {
+      const userId = c.req.query('userId')
+      if (userId) {
+         const userId = Number(c.req.query('userId'))
+         const data = await db.select().from(huts).where(eq(huts.userId, userId))
+         return c.json(data)
+      }
       const data = await db.select().from(huts)
+
+      return c.json(data)
+   })
+   .get('/me', getUser, async (c) => {
+      const user = c.get('user')
+      const data = await db.select().from(huts).where(eq(huts.userId, user.id))
 
       return c.json(data)
    })

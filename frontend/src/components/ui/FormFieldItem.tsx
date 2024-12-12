@@ -10,7 +10,7 @@ interface FormFieldItemProps {
    type?: string
 }
 
-const FormFieldItem: React.FC<FormFieldItemProps> = ({ control, name, label, placeholder, type = 'text' }) => (
+const FormFieldItem: React.FC<FormFieldItemProps> = ({ control, name, label, placeholder = '', type = 'text' }) => (
    <FormField
       control={control}
       name={name}

@@ -27,7 +27,7 @@ export const CreateHutDialog = () => {
    })
 
    const onSubmit = async (values: z.infer<typeof hutSchema>) => {
-      console.log('ONSUBMIT', values)
+      console.log('ONSUBMIT')
       try {
          const res = await createHut(values)
          if (res) {
@@ -49,7 +49,7 @@ export const CreateHutDialog = () => {
                </DialogHeader>
                <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                     <FormFieldItem control={form.control} name="name" label="Nom" />
+                     <FormFieldItem control={form.control} name="name" label="Nom" type="text" />
                      <FormFieldItem control={form.control} name="description" label="Description" />
                      <div className="flex space-x-6">
                         <FormFieldItem control={form.control} name="summerCapacity" label="Capacité été" type="number" />

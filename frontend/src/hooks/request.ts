@@ -14,6 +14,14 @@ export async function getHuts() {
    return data
 }
 
+export async function getMyHuts() {
+   const response = await api.huts.me.$get()
+   const data = await response.json()
+   if (!data) return []
+
+   return data
+}
+
 export async function getHut(id: number) {
    const response = await api.huts[':id'].$get({ param: { id: id.toString() } })
    const data = await response.json()
