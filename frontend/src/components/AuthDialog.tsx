@@ -4,18 +4,19 @@ import { Form } from '@/components/ui/form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { getUser } from '@/hooks/request'
-import { User } from 'lucide-react'
 import { signup, logout, login } from '@/hooks/request'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { loginSchema, signupSchema } from '../../../shared/validationSchema'
-import { toast } from 'sonner'
+import { useToast } from '@/hooks/use-toast'
 import { useNavigate } from '@tanstack/react-router'
 import FormFieldItem from './ui/FormFieldItem'
+import { User } from 'lucide-react'
 
 export const AuthDialog = () => {
    const navigate = useNavigate()
+   const { toast } = useToast()
    const [isLoginOpen, setIsLoginOpen] = useState(false)
    const [isSignupOpen, setIsSignupOpen] = useState(false)
    const [username, setUsername] = useState<string | null>(null)
@@ -39,7 +40,7 @@ export const AuthDialog = () => {
          if (res && res.success) {
             setUsername(values.username)
             setIsLoginOpen(false)
-            toast.success('Vous êtes connecté')
+            toast({ title: 'Vous êtes connecté' })
          } else {
             loginForm.setError('username', { type: 'manual', message: 'Identifiant ou mot de passe inconnu' })
             loginForm.setError('password', { type: 'manual', message: 'Identifiant ou mot de passe inconnu' })
@@ -64,7 +65,7 @@ export const AuthDialog = () => {
          if (res && res.success) {
             setUsername(values.username)
             setIsSignupOpen(false)
-            toast.success('Votre compte a bien été créé')
+            toast({ title: 'Votre compte a bien été créé' })
          }
       } catch (error) {
          signupForm.setError('username', { type: 'manual', message: 'An unexpected error occurred' })
@@ -75,7 +76,7 @@ export const AuthDialog = () => {
    const logOut = async () => {
       await logout()
       setUsername(null)
-      toast.success('Vous êtes déconnecté')
+      toast({ title: 'Vous êtes déconnecté' })
    }
    return (
       <>
@@ -87,7 +88,7 @@ export const AuthDialog = () => {
                         {username.charAt(0)}
                      </div>
                   ) : (
-                     <User className=" h-5 w-5" />
+                     <User size={24} />
                   )}
                </Button>
             </DropdownMenuTrigger>
