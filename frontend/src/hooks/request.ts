@@ -1,5 +1,7 @@
 import { hc } from 'hono/client'
 import { type ApiType } from '@server/app'
+import { z } from 'zod'
+import { hutSchema } from '../../../shared/validationSchema'
 
 const client = hc<ApiType>('/')
 const api = client.api
@@ -7,7 +9,6 @@ const api = client.api
 export async function getHuts() {
    const response = await api.huts.$get()
    const data = await response.json()
-   console.log(data)
    if (!data) return []
 
    return data
@@ -15,6 +16,13 @@ export async function getHuts() {
 
 export async function getHut(id: number) {
    const response = await api.huts[':id'].$get({ param: { id: id.toString() } })
+   const data = await response.json()
+
+   return data
+}
+
+export async function createHut(hut: z.infer<typeof hutSchema>) {
+   const response = await api.huts.$post({ form: hut })
    const data = await response.json()
 
    return data
@@ -37,14 +45,12 @@ export async function signup(username: string, email: string, password: string) 
 export async function logout() {
    const response = await api.auth.logout.$post()
    const data = await response.json()
-   console.log(data)
    return data
 }
 
 export async function getUser() {
    const response = await api.auth.me.$get()
    const data = await response.json()
-   console.log(data)
 
    return data as { username: string }
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from '@/components/ui/form'
+import { Form } from '@/components/ui/form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { getUser } from '@/hooks/request'
@@ -13,6 +12,7 @@ import { z } from 'zod'
 import { loginSchema, signupSchema } from '../../../shared/validationSchema'
 import { toast } from 'sonner'
 import { useNavigate } from '@tanstack/react-router'
+import FormFieldItem from './ui/FormFieldItem'
 
 export const AuthDialog = () => {
    const navigate = useNavigate()
@@ -109,36 +109,12 @@ export const AuthDialog = () => {
          <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
             <DialogContent className="sm:max-w-[425px]">
                <DialogHeader>
-                  <DialogTitle>Se connecter</DialogTitle>
+                  <DialogTitle>Connexion</DialogTitle>
                </DialogHeader>
                <Form {...loginForm}>
-                  <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                     <FormField
-                        control={loginForm.control}
-                        name="username"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Nom d'utilisateur</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="jeandu31" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                     <FormField
-                        control={loginForm.control}
-                        name="password"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Mot de passe</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="Mot de passe" type="password" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
+                  <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="flex-col space-y-4">
+                     <FormFieldItem control={loginForm.control} name="username" label="Identifiant" type="name" />
+                     <FormFieldItem control={loginForm.control} name="password" label="Mot de passe" type="password" />
                      <Button type="submit">Connexion</Button>
                   </form>
                </Form>
@@ -148,61 +124,14 @@ export const AuthDialog = () => {
          <Dialog open={isSignupOpen} onOpenChange={setIsSignupOpen}>
             <DialogContent className="sm:max-w-[425px]">
                <DialogHeader>
-                  <DialogTitle className="text-center">Créer mon compte</DialogTitle>
+                  <DialogTitle>Créer mon compte</DialogTitle>
                </DialogHeader>
                <Form {...signupForm}>
                   <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="flex-col space-y-4">
-                     <FormField
-                        control={signupForm.control}
-                        name="username"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Nom d'utilisateur</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="jeandu31" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                     <FormField
-                        control={signupForm.control}
-                        name="email"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Email</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="jean@mail.fr" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                     <FormField
-                        control={signupForm.control}
-                        name="password"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Mot de passe</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="Mot de passe" type="password" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                     <FormField
-                        control={signupForm.control}
-                        name="confirmPassword"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormControl>
-                                 <Input placeholder="Confirmer le mot de passe" type="password" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
+                     <FormFieldItem control={signupForm.control} name="username" label="Nom d'utilisateur" type="text" />
+                     <FormFieldItem control={signupForm.control} name="email" label="Email" type="email" />
+                     <FormFieldItem control={signupForm.control} name="password" label="Mot de passe" type="password" />
+                     <FormFieldItem control={signupForm.control} name="confirmPassword" label="Confirmer le mot de passe" type="password" />
                      <Button type="submit">S'inscrire</Button>
                   </form>
                </Form>
@@ -211,3 +140,5 @@ export const AuthDialog = () => {
       </>
    )
 }
+
+export default AuthDialog

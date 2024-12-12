@@ -2,6 +2,9 @@ import { Hono } from 'hono'
 import { db } from '../db'
 import { huts } from '../db/schema'
 import { eq } from 'drizzle-orm'
+import { zValidator } from '@hono/zod-validator'
+import { hutSchema } from '../../shared/validationSchema'
+import { getUser } from '../middleware/getUser'
 
 const hutsRoute = new Hono()
    .get('/', async (c) => {
@@ -15,6 +18,14 @@ const hutsRoute = new Hono()
 
       data.length !== 1 && c.status(404)
       return c.json(data[0])
+   })
+   .post('/', getUser, zValidator('form', hutSchema), async (c) => {
+      const hut = c.req.valid('form')
+      hut.userId = c.get('user').id
+      console.log(hut)
+      const data = await db.insert(huts).values(hut)
+
+      return c.json(data)
    })
 
 export default hutsRoute
