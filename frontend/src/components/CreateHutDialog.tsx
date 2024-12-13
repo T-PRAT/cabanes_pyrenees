@@ -6,15 +6,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { createHut } from '@/hooks/request'
 import { hutSchema } from '../../../shared/validationSchema'
-import { useToast } from '@/hooks/use-toast'
 import { Button } from './ui/button'
 import FormFieldItem from './ui/FormFieldItem'
 import { useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
 
 export const CreateHutDialog = () => {
    const [isOpen, setIsOpen] = useState(false)
    const queryClient = useQueryClient()
+   const { toast } = useToast()
 
    const form = useForm<z.infer<typeof hutSchema>>({
       resolver: zodResolver(hutSchema),
@@ -34,9 +35,9 @@ export const CreateHutDialog = () => {
       if (res) {
          queryClient.invalidateQueries({ queryKey: ['myHuts'] })
          setIsOpen(false)
-         toast.success('La cabane a bien été créé')
+         toast({ title: 'La cabane a bien été ajoutée' })
       } else {
-         toast.error('Une erreur est survenue')
+         toast({ title: 'Une erreur est survenue' })
       }
    }
 

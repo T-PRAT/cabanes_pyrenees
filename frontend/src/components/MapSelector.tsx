@@ -9,7 +9,7 @@ export const MapSelector = ({ onChange, selectedLayer = 'OpenTopoMap' }) => {
    return (
       <Popover>
          <PopoverTrigger asChild>
-            <Button variant="outline" className="fixed right-5 top-9 z-20 p-2">
+            <Button className="bg-background fixed right-5 top-9 z-10 p-2">
                <Layers size={20} strokeWidth={3} />
             </Button>
          </PopoverTrigger>

@@ -5,10 +5,13 @@ import { Trash } from 'lucide-react'
 import { useState } from 'react'
 import { deleteHut } from '@/hooks/request'
 import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import { Map } from 'lucide-react'
 
 export const HutList = ({ huts, edit = false }) => {
    const [toDelete, setToDelete] = useState(0)
    const queryClient = useQueryClient()
+   const navigate = useNavigate()
 
    const handleHutDelete = async (id: number) => {
       await deleteHut(id)
@@ -21,6 +24,7 @@ export const HutList = ({ huts, edit = false }) => {
          <Table>
             <TableHeader>
                <TableRow>
+                  <TableHead></TableHead>
                   <TableHead>Nom</TableHead>
                   <TableHead>Altitude</TableHead>
                   <TableHead>Latitude</TableHead>
@@ -30,10 +34,15 @@ export const HutList = ({ huts, edit = false }) => {
             <TableBody>
                {huts?.map((hut) => (
                   <TableRow key={hut.id}>
+                     <TableCell>
+                        <Button variant="secondary" onClick={() => navigate({ to: '/', hash: hut.id.toString() })} className="flex items-center">
+                           <Map size={20} strokeWidth={3} />
+                        </Button>
+                     </TableCell>
                      <TableCell>{hut.name}</TableCell>
                      <TableCell>{hut.altitude}</TableCell>
-                     <TableCell>{hut.latitude}</TableCell>
-                     <TableCell>{hut.longitude}</TableCell>
+                     <TableCell>{parseFloat(hut.latitude).toFixed(2)}</TableCell>
+                     <TableCell>{parseFloat(hut.longitude).toFixed(2)}</TableCell>
                      {edit && (
                         <TableCell>
                            <Button onClick={() => setToDelete(hut.id)} variant="destructive">

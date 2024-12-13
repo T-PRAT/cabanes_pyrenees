@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getHut } from '../hooks/request'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table'
-import { useLocation } from '@tanstack/react-router'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { useLocation, useNavigate } from '@tanstack/react-router'
+import { X } from 'lucide-react'
+import { Comments } from './Comments'
 
 export const SideHut = () => {
    const location = useLocation()
+   const navigate = useNavigate()
    const [currentHut, setCurrentHut] = useState(null)
 
    useEffect(() => {
@@ -19,21 +22,32 @@ export const SideHut = () => {
       queryFn: () => getHut(currentHut),
    })
 
+   const closeHut = () => {
+      setCurrentHut(null)
+      navigate({ hash: '', replace: true })
+   }
+
    return (
-      <div className={`absolute left-0 top-28 z-10 p-2 ${!currentHut ? 'hidden' : ''}`}>
-         <Card className="max-w-full">
+      <div className={`absolute inset-x-2 top-6 z-30 p-4 md:inset-auto md:top-28 ${!currentHut ? 'hidden' : 'block'}`}>
+         <Card className="max-w-full md:max-w-md">
             {status === 'pending' ? (
                <p>Loading...</p>
             ) : status === 'error' ? (
                <p>Error :(</p>
             ) : (
                <>
+                  <button
+                     onClick={() => closeHut()}
+                     className=" bg-muted absolute bottom-1 right-1 rounded-full p-1 transition duration-300 hover:scale-105 md:bottom-auto md:top-1"
+                  >
+                     <X size={24} strokeWidth={3} />
+                  </button>
                   <CardHeader>
                      <CardTitle>{hut?.name}</CardTitle>
                   </CardHeader>
                   <CardContent>
                      <p className="text-md py-3">{hut?.description}</p>
-                     <Table>
+                     <Table className="bg-secondary my-4">
                         <TableBody>
                            <TableRow>
                               <TableHead>Capacité été:</TableHead>
@@ -45,22 +59,22 @@ export const SideHut = () => {
                            </TableRow>
                         </TableBody>
                      </Table>
-                     <table className="border- table-auto border text-center">
-                        <thead>
+
+                     <Table className="bg-card">
+                        <TableHeader>
                            <TableRow>
                               <TableHead>Altitude</TableHead>
                               <TableHead>Latitude</TableHead>
                               <TableHead>Longitude</TableHead>
                            </TableRow>
-                        </thead>
-                        <tbody>
-                           <TableRow>
-                              <TableCell>{hut?.altitude}</TableCell>
-                              <TableCell>{hut?.latitude}</TableCell>
-                              <TableCell>{hut?.longitude}</TableCell>
-                           </TableRow>
-                        </tbody>
-                     </table>
+                        </TableHeader>
+                        <TableBody>
+                           <TableCell>{hut?.altitude}</TableCell>
+                           <TableCell>{hut?.latitude}</TableCell>
+                           <TableCell>{hut?.longitude}</TableCell>
+                        </TableBody>
+                     </Table>
+                     <Comments />
                   </CardContent>
                </>
             )}

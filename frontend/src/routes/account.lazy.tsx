@@ -15,7 +15,7 @@ function Account() {
    })
 
    return (
-      <div className="container mt-24">
+      <div className="container mt-4 md:mt-24">
          <div className="flex justify-between">
             <h1 className="mb-6 text-2xl font-bold md:text-4xl">Mes cabanes</h1>
             <CreateHutDialog />

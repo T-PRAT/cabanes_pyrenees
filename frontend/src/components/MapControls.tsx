@@ -23,16 +23,16 @@ export const MapControls = () => {
 
    return (
       <div className="fixed right-5 top-20 flex flex-col space-y-1" style={{ zIndex: 1000 }}>
-         <Button variant="secondary" onClick={zoomIn} className="p-2">
+         <Button onClick={zoomIn} className="bg-background hidden p-2 sm:block">
             <Plus size={20} strokeWidth={4} />
          </Button>
-         <Button variant="secondary" onClick={zoomOut} className="p-2">
+         <Button onClick={zoomOut} className="bg-background hidden p-2 sm:block">
             <Minus size={20} strokeWidth={4} />
          </Button>
-         <Button variant="secondary" onClick={resetZoom} className="p-2">
+         <Button onClick={resetZoom} className="bg-background p-2">
             <ScanSearch size={20} strokeWidth={3} />
          </Button>
-         <Button variant="secondary" onClick={locate} className="p-2">
+         <Button onClick={locate} className="bg-background p-2">
             <Locate size={20} strokeWidth={4} />
          </Button>
       </div>
