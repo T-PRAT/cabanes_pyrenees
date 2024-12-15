@@ -74,7 +74,7 @@ export const SideHut = () => {
                            <TableCell>{hut?.longitude}</TableCell>
                         </TableBody>
                      </Table>
-                     <Comments />
+                     <Comments hutId={hut.id} />
                   </CardContent>
                </>
             )}

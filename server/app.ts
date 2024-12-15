@@ -11,7 +11,7 @@ app.use('*', logger())
 const apiRoutes = app.basePath('/api').route('/huts', hutsRoute).route('/auth', authRoute)
 
 app.get('*', serveStatic({ root: './frontend/dist' }))
-app.get('*', serveStatic({ root: './frontend/dist/index.html' }))
+app.get('*', serveStatic({ path: './frontend/dist/index.html' }))
 
 export default app
 

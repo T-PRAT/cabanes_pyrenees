@@ -28,3 +28,7 @@ export const hutSchema = z.object({
    latitude: z.string().regex(/^-?([1-8]?[0-9](\.\d+)?|90(\.0+)?)/, { message: "La latitude n'est pas valide" }),
    longitude: z.string().regex(/^-?((1[0-7][0-9]|[1-9]?[0-9])(\.\d+)?|180(\.0+)?)/, { message: "La longitude n'est pas valide" }),
 })
+
+export const commentSchema = z.object({
+   content: z.string().min(3, { message: 'Le commentaire doit contenir au moins 3 caractères' }).max(1000, { message: 'Le commentaire ne doit pas dépasser 1000 caractères' }),
+})
