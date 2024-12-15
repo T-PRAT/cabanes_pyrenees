@@ -11,6 +11,7 @@
     "prettier": "prettier --write ."
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9",
     "@types/bun": "latest",
     "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.29.1",
