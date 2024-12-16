@@ -3,7 +3,7 @@ import { db } from '../db'
 import { comments, huts, users } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { zValidator } from '@hono/zod-validator'
-import { commentSchema, hutSchema } from '../../shared/validationSchema'
+import { commentSchema, hutSchema, idSchema } from '../../shared/validationSchema'
 import { getUser } from '../middleware/getUser'
 
 const hutsRoute = new Hono()
@@ -48,8 +48,9 @@ const hutsRoute = new Hono()
 
       return c.json(data)
    })
-   .get('/:id/comments', async (c) => {
-      const id = Number(c.req.param('id'))
+   .get('/:id/comments', zValidator('param', idSchema), async (c) => {
+      const { id } = c.req.valid('param')
+
       const data = (await db.select().from(comments).where(eq(comments.hutId, id))) as Array<{
          id: number
          createdAt: Date
@@ -66,12 +67,13 @@ const hutsRoute = new Hono()
 
       return c.json(data)
    })
-   .post('/:id/comments', getUser, zValidator('json', commentSchema), async (c) => {
+   .post('/:id/comments', getUser, zValidator('form', commentSchema), zValidator('param', idSchema), async (c) => {
       const user = c.get('user')
-      if (!user) return c.status(401)
-      const id = Number(c.req.param('id'))
-      const comment = c.req.valid('json')
-      const data = await db.insert(comments).values({ ...comment, userId: user.id, hutId: id })
+      const { id } = c.req.valid('param')
+      const { content } = c.req.valid('form')
+      console.log(content)
+
+      const data = await db.insert(comments).values({ content, userId: user.id, hutId: id })
 
       return c.json(data)
    })

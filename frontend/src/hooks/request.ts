@@ -51,7 +51,14 @@ export async function getComments(hutId: number) {
 }
 
 export async function createComment(hutId: number, content: string) {
-   const response = await api.huts[':id'].comments.$post({ param: { id: hutId.toString() }, json: { content: content } })
+   const response = await api.huts[':id'].comments.$post({ param: { id: hutId.toString() }, form: { content: content } })
+   const data = await response.json()
+
+   return data
+}
+
+export async function deleteComment(id: number) {
+   const response = await api.comments[':id'].$delete({ param: { id: id.toString() } })
    const data = await response.json()
 
    return data

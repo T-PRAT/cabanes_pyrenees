@@ -14,6 +14,7 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
 
    const { user } = await validateSessionToken(sessionId!)
    if (user) c.set('user', user)
+   else throw new Error('Unauthorized')
 
    await next()
 })
