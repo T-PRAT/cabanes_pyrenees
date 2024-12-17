@@ -66,11 +66,10 @@ const hutsRoute = new Hono()
 
       return c.json(data)
    })
-   .post('/:id/comments', getUser, zValidator('form', commentSchema), zValidator('param', idSchema), async (c) => {
+   .post('/:id/comments', getUser, zValidator('param', idSchema), zValidator('form', commentSchema), async (c) => {
       const user = c.get('user')
       const { id } = c.req.valid('param')
       const { content } = c.req.valid('form')
-      console.log(content)
 
       const data = await db.insert(comments).values({ content, userId: user.id, hutId: id })
 

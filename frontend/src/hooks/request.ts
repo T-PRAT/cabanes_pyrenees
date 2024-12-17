@@ -92,5 +92,5 @@ export async function getUser() {
    if (response.status === 401) return null
    const data = await response.json()
 
-   return data as { username: string }
+   return data
 }

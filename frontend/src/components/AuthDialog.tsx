@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+// filepath: /home/tprat/cabane_pyrenees/frontend/src/components/AuthDialog.tsx
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { getUser } from '@/hooks/request'
 import { signup, logout, login } from '@/hooks/request'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -13,19 +13,14 @@ import { useToast } from '@/hooks/use-toast'
 import { useNavigate } from '@tanstack/react-router'
 import FormFieldItem from './ui/FormFieldItem'
 import { User } from 'lucide-react'
+import { useUser } from '@/context/UserContext'
 
 export const AuthDialog = () => {
    const navigate = useNavigate()
    const { toast } = useToast()
+   const { username, setUser } = useUser()
    const [isLoginOpen, setIsLoginOpen] = useState(false)
    const [isSignupOpen, setIsSignupOpen] = useState(false)
-   const [username, setUsername] = useState<string | null>(null)
-
-   useEffect(() => {
-      getUser().then((data) => {
-         if (data) setUsername(data.username)
-      })
-   }, [])
 
    const loginForm = useForm<z.infer<typeof loginSchema>>({
       resolver: zodResolver(loginSchema),
@@ -34,11 +29,12 @@ export const AuthDialog = () => {
          password: '',
       },
    })
+
    const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
       try {
          const res = await login(values.username, values.password)
          if (res && res.success) {
-            setUsername(values.username)
+            setUser(res.userId, values.username)
             setIsLoginOpen(false)
             toast({ title: 'Vous êtes connecté' })
          } else {
@@ -59,11 +55,12 @@ export const AuthDialog = () => {
          confirmPassword: '',
       },
    })
+
    const onSignupSubmit = async (values: z.infer<typeof signupSchema>) => {
       try {
          const res = await signup(values.username, values.email, values.password)
          if (res && res.success) {
-            setUsername(values.username)
+            setUser(Number(res.userId), values.username)
             setIsSignupOpen(false)
             toast({ title: 'Votre compte a bien été créé' })
          }
@@ -75,9 +72,10 @@ export const AuthDialog = () => {
 
    const logOut = async () => {
       await logout()
-      setUsername(null)
+      setUser(null, null)
       toast({ title: 'Vous êtes déconnecté' })
    }
+
    return (
       <>
          <DropdownMenu>

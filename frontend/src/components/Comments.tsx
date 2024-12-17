@@ -55,6 +55,7 @@ export const Comments = ({ hutId }) => {
                      <div className={`flex h-8 w-8 items-center justify-center rounded-full text-white ${getAvatarBgClass(index)}`}>{comment.username.charAt(0).toUpperCase()}</div>
                      <h3 className="font-bold">{comment.username}</h3>
                      <span className=" text-accent-foreground/60 text-sm">le {new Date(comment.createdAt).toLocaleDateString()}</span>
+
                      <span
                         onClick={() => handleDeleteComment(comment.id)}
                         className="text-accent-foreground/60 hover:text-destructive text-right text-sm transition duration-300 hover:cursor-pointer"
