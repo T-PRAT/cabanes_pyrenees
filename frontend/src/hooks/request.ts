@@ -17,6 +17,7 @@ export async function getHuts() {
 }
 export async function getMyHuts() {
    const response = await api.huts.me.$get()
+   if (response.status === 401) return []
    const data = await response.json()
    if (!data) return []
 
@@ -30,12 +31,14 @@ export async function getHut(id: number) {
 }
 export async function createHut(hut: z.infer<typeof hutSchema>) {
    const response = await api.huts.$post({ form: hut })
+   if (response.status === 401) return null
    const data = await response.json()
 
    return data
 }
 export async function deleteHut(id: number) {
    const response = await api.huts[':id'].$delete({ param: { id: id.toString() } })
+   if (response.status === 401) return null
    const data = await response.json()
 
    return data
@@ -52,6 +55,7 @@ export async function getComments(hutId: number) {
 
 export async function createComment(hutId: number, content: string) {
    const response = await api.huts[':id'].comments.$post({ param: { id: hutId.toString() }, form: { content: content } })
+   if (response.status === 401) return null
    const data = await response.json()
 
    return data
@@ -59,6 +63,7 @@ export async function createComment(hutId: number, content: string) {
 
 export async function deleteComment(id: number) {
    const response = await api.comments[':id'].$delete({ param: { id: id.toString() } })
+   if (response.status === 401) return null
    const data = await response.json()
 
    return data
@@ -79,12 +84,12 @@ export async function signup(username: string, email: string, password: string) 
    return data
 }
 export async function logout() {
-   const response = await api.auth.logout.$post()
-   const data = await response.json()
-   return data
+   await api.auth.logout.$post()
 }
+
 export async function getUser() {
    const response = await api.auth.me.$get()
+   if (response.status === 401) return null
    const data = await response.json()
 
    return data as { username: string }

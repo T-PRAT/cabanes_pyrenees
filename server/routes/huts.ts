@@ -33,7 +33,6 @@ const hutsRoute = new Hono()
    })
    .post('/', getUser, zValidator('form', hutSchema), async (c) => {
       const user = c.get('user')
-      if (!user) return c.status(401)
       const hut = c.req.valid('form')
       console.log(user, hut)
       const data = await db.insert(huts).values({ ...hut, userId: user.id })

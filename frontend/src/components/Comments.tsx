@@ -15,7 +15,7 @@ export const Comments = ({ hutId }) => {
    const [showInput, setShowInput] = useState(false)
    const [inputValue, setInputValue] = useState('')
 
-   const onSubmit = async () => {
+   const handlePostComment = async () => {
       const res = await createComment(hutId, inputValue)
       if (res) {
          setInputValue('')
@@ -41,14 +41,14 @@ export const Comments = ({ hutId }) => {
       <div className="mt-4">
          <div className="my-2 flex items-center justify-between">
             <h2 className="text-lg font-bold ">Commentaires</h2>
-            <Button size="sm" onClick={() => (showInput ? onSubmit() : setShowInput(!showInput))}>
+            <Button size="sm" onClick={() => (showInput ? handlePostComment() : setShowInput(!showInput))}>
                {showInput ? <Send /> : <MessageCircle />}
             </Button>
          </div>
          {showInput && <Input name="content" value={inputValue} className="my-2" onChange={(e) => setInputValue(e.target.value)} />}
          <div className="flex max-h-40 flex-col space-y-1 overflow-auto rounded p-2 shadow-inner shadow-black/20">
-            {status === 'pending' && <p>Loading...</p>}
-            {status === 'error' && <p>Aucun commentaires </p>}
+            {status === 'pending' && <p className=" animate-pulse ">Chargement des commentaires...</p>}
+            {(status === 'error' || comments?.length < 1) && <p className=" text-accent-foreground/60">Aucun commentaires</p>}
             {comments?.map((comment, index) => (
                <div className=" bg-accent rounded-lg p-2" key={index}>
                   <div className="flex items-center space-x-2">

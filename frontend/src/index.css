@@ -38,8 +38,3 @@
       --radius: 0.7rem;
    }
 }
-
-html,
-body {
-   overflow-y: hidden;
-}

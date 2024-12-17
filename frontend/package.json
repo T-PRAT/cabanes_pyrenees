@@ -24,6 +24,7 @@
       "@react-leaflet/core": "^2.1.0",
       "@tanstack/react-query": "^5.4.3",
       "@tanstack/react-router": "^1.86.1",
+      "@uploadthing/react": "^7.1.3",
       "class-variance-authority": "^0.7.0",
       "clsx": "^2.0.0",
       "cmdk": "1.0.0",

@@ -23,7 +23,7 @@ export const AuthDialog = () => {
 
    useEffect(() => {
       getUser().then((data) => {
-         setUsername(data.username)
+         if (data) setUsername(data.username)
       })
    }, [])
 

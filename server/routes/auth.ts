@@ -57,9 +57,6 @@ const authRoute = new Hono()
    })
    .get('/me', getUser, async (c) => {
       const user = c.get('user')
-      if (!user) {
-         return c.json({ error: 'No user found' })
-      }
       return c.json({ username: user.username })
    })
 
