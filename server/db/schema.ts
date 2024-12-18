@@ -48,6 +48,16 @@ export const comments = pgTable('comments', {
       .references(() => huts.id),
 })
 
+export const hutImages = pgTable('hut_images', {
+   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+   hutId: integer()
+      .notNull()
+      .references(() => huts.id),
+   imageUrl: varchar('image_url', { length: 255 }).notNull(),
+})
+
 export type Users = InferSelectModel<typeof users>
 export type Sessions = InferSelectModel<typeof sessions>
 export type Huts = InferSelectModel<typeof huts>
+export type Comments = InferSelectModel<typeof comments>
+export type HutImages = InferSelectModel<typeof hutImages>

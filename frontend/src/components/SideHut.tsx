@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { X } from 'lucide-react'
 import { Comments } from './Comments'
+import { ImageCarousel } from './ImageCarousel'
 
 export const SideHut = () => {
    const location = useLocation()
@@ -17,7 +18,7 @@ export const SideHut = () => {
       hutId && setCurrentHut(Number(hutId))
    }, [location.hash, setCurrentHut])
 
-   const { data: hut, status } = useQuery({
+   const { data: hut, status } = useQuery<Hut>({
       queryKey: ['hut', currentHut],
       queryFn: () => getHut(currentHut),
    })
@@ -28,8 +29,8 @@ export const SideHut = () => {
    }
 
    return (
-      <div className={`absolute inset-x-0 top-6 z-30 p-2 md:inset-auto md:top-28 ${!currentHut ? 'hidden' : 'block'}`}>
-         <Card className="max-w-full md:max-w-md">
+      <div className={`absolute inset-x-0 top-6 z-30 p-2 md:inset-auto md:top-16 ${!currentHut ? 'hidden' : 'block'}`}>
+         <Card className=" max-h-[92vh]  max-w-full overflow-y-auto overflow-x-hidden md:max-w-md">
             {status === 'pending' ? (
                <p>Loading...</p>
             ) : status === 'error' ? (
@@ -75,6 +76,9 @@ export const SideHut = () => {
                         </TableBody>
                      </Table>
                      <Comments hutId={hut.id} />
+                     <div className="text-center">
+                        <ImageCarousel images={hut.images} />
+                     </div>
                   </CardContent>
                </>
             )}

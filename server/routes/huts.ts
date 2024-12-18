@@ -1,10 +1,11 @@
 import { Hono } from 'hono'
 import { db } from '../db'
-import { comments, huts, users } from '../db/schema'
+import { comments, hutImages, huts, users } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { zValidator } from '@hono/zod-validator'
 import { commentSchema, hutSchema, idSchema } from '../../shared/validationSchema'
 import { getUser } from '../middleware/getUser'
+import { storage } from '../lib/bucket'
 
 const hutsRoute = new Hono()
    .get('/', async (c) => {
@@ -26,10 +27,29 @@ const hutsRoute = new Hono()
    })
    .get('/:id', async (c) => {
       const id = Number(c.req.param('id'))
-      const data = await db.select().from(huts).where(eq(huts.id, id))
+      // get hut and associated images
+      const data = (await db.select().from(huts).where(eq(huts.id, id)))[0]
+      const hut = {
+         id: data.id,
+         name: data.name,
+         description: data.description ?? '',
+         summerCapacity: data.summerCapacity ?? 0,
+         winterCapacity: data.winterCapacity ?? 0,
+         altitude: data.altitude,
+         latitude: Number(data.latitude),
+         longitude: Number(data.longitude),
+         createdAt: data.createdAt,
+         updatedAt: data.updatedAt,
+         userId: data.userId ?? 0,
+         images: [] as Array<{ id: number; hutId: number; imageUrl: string }>,
+      }
+      if (!data) return c.status(404)
+      const images = await db.select().from(hutImages).where(eq(hutImages.hutId, id))
+      for (const image of images) {
+         hut.images.push({ id: image.id, hutId: image.hutId, imageUrl: image.imageUrl })
+      }
 
-      data.length !== 1 && c.status(404)
-      return c.json(data[0])
+      return c.json(hut)
    })
    .post('/', getUser, zValidator('form', hutSchema), async (c) => {
       const user = c.get('user')
@@ -74,6 +94,17 @@ const hutsRoute = new Hono()
       const data = await db.insert(comments).values({ content, userId: user.id, hutId: id })
 
       return c.json(data)
+   })
+   .post('/:id/upload', zValidator('param', idSchema), storage.single('image'), async (c) => {
+      const { id } = c.req.valid('param')
+      const { image } = c.var.files
+
+      if (!image) return c.status(400)
+
+      const imageUrl = `${process.env.IMAGE_BASE_URL}${id}-${image?.name}`
+      await db.insert(hutImages).values({ hutId: id, imageUrl })
+
+      return c.json({ message: 'success' })
    })
 
 export default hutsRoute

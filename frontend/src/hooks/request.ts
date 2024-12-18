@@ -43,6 +43,10 @@ export async function deleteHut(id: number) {
 
    return data
 }
+export async function addHutImage(id: number, file: File) {
+   const response = await api.huts[':id'].upload.$post({ param: { id: id.toString() }, form: { image: file } })
+   if (response.status === 401) return null
+}
 
 // ------------- COMMENTS -------------
 
