@@ -18,7 +18,7 @@ export const SideHut = () => {
       hutId && setCurrentHut(Number(hutId))
    }, [location.hash, setCurrentHut])
 
-   const { data: hut, status } = useQuery<Hut>({
+   const { data: hut, status } = useQuery({
       queryKey: ['hut', currentHut],
       queryFn: () => getHut(currentHut),
    })

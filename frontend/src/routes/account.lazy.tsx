@@ -3,17 +3,22 @@ import { HutList } from '@/components/HutList'
 import { CreateHutDialog } from '@/components/CreateHutDialog'
 import { useQuery } from '@tanstack/react-query'
 import { getMyHuts } from '@/hooks/request'
+import { useUser } from '@/context/UserContext'
 
 export const Route = createLazyFileRoute('/account')({
    component: Account,
 })
 
 function Account() {
+   const { username } = useUser()
    const { data: myHuts, status } = useQuery({
       queryKey: ['myHuts'],
       queryFn: () => getMyHuts(),
    })
 
+   if (!username) {
+      return <p className="p-20">Vous devez être connecté pour accéder à cette page</p>
+   }
    return (
       <div className="container mt-4 md:mt-24">
          <div className="flex justify-between">

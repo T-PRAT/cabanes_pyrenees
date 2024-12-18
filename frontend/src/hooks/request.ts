@@ -8,6 +8,14 @@ const api = client.api
 
 // ------------- HUTS -------------
 
+const extendedHutSchema = hutSchema.extend({
+   id: z.string(),
+   images: z.object({
+      imageUrl: z.string(),
+   }),
+})
+type ExtendedHut = z.infer<typeof extendedHutSchema>
+
 export async function getHuts() {
    const response = await api.huts.$get()
    const data = await response.json()
@@ -27,7 +35,7 @@ export async function getHut(id: number) {
    const response = await api.huts[':id'].$get({ param: { id: id.toString() } })
    const data = await response.json()
 
-   return data
+   return data as ExtendedHut
 }
 export async function createHut(hut: z.infer<typeof hutSchema>) {
    const response = await api.huts.$post({ form: hut })

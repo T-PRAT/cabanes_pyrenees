@@ -1,7 +1,7 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
 export const ImageCarousel = ({ images }) => {
-   if (!images) {
+   if (!images || images.length === 0) {
       return null
    }
    return (
